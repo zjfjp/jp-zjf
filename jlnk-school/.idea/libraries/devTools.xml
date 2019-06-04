@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="devTools">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/devTools.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/devTools.jar!/" />
+    </SOURCES>
+  </library>
+</component>
