@@ -1,0 +1,21 @@
+create database cei;
+use cei;
+create table news(
+id int primary key auto_increment,
+title varchar(50) not null,
+description varchar(250),
+content varchar (5000),
+createTime varchar (50),
+click int default 0,
+column_id int
+);
+
+
+create table column(
+Cid int primary key auto_increment,
+Ctitle varchar(50) not null,
+Cdescription varchar(250),
+content varchar (5000),
+createTime varchar (50),
+foreign key column_id references news_id
+);
