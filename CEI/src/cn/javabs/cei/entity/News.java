@@ -3,7 +3,7 @@ package cn.javabs.cei.entity;
 public class News {
 
     private int id;
-    private String title;//新闻题目
+    private String title;//新闻标题
     private String content;//新闻内容
     private String createTime;//创建时间
     private String description;//描述
