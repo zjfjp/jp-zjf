@@ -21,11 +21,9 @@ public class NewsServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        doGet(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html,charset=utf-8");
 
         //op接收参数
         String op = request.getParameter("op");
@@ -71,10 +69,10 @@ public class NewsServlet extends HttpServlet {
         News news = newsService.findNewsById(newsId);
         if(news != null){
             request.setAttribute("news",news);
-            request.getRequestDispatcher("/admin/updateNews.jsp").forward(request,response);
+            request.getRequestDispatcher("/admin/editNews.jsp").forward(request,response);
         }else{
-            request.setAttribute("msg","数据回显失败");
-            request.getRequestDispatcher("/admin/updateNews.jsp").forward(request,response);
+            request.setAttribute("SESSION","数据回显失败");
+            request.getRequestDispatcher("success.jsp").forward(request,response);
         }
 
 
@@ -85,29 +83,45 @@ public class NewsServlet extends HttpServlet {
      * @param request
      * @param response
      */
-    private void updateNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void updateNews(HttpServletRequest request, HttpServletResponse response)  {
+
+
 
         String id = request.getParameter("id");
         int newsId = Integer.parseInt(id);
-        News news = new News();
-        try {
-        news.setId(newsId);
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+        String author = request.getParameter("author");
+        String content = request.getParameter("content");
+        String createTime = request.getParameter("createTime");
 
-            BeanUtils.populate(news,request.getParameterMap());
+
+        News news = new News();
+
+        news.setId(newsId);
+        news.setTitle(title);
+        news.setDescription(description);
+        news.setContent(content);
+        news.setAuthor(author);
+        news.setCreateTime(createTime);
+
+        try {
+            int rows = newsService.updateNews(news);
+
+            if (rows > 0) {
+                request.setAttribute("SESSION", "修改新闻数据成功！");
+                request.getRequestDispatcher("/success.jsp").forward(request,
+                        response);
+            } else {
+                request.setAttribute("SESSION", "修改新闻数据失败！");
+                request.getRequestDispatcher("/success.jsp").forward(request,
+                        response);
+            }
         } catch (Exception e) {
-           throw new RuntimeException(e);
-    }
-        int rows = newsService.updateNews(news);
-        if(rows>0){
-            request.setAttribute("msg","修改新闻成功");
-            request.getRequestDispatcher("/message.jsp").forward(request,response);
-        }else{
-            request.setAttribute("msg","修改新闻失败");
-            request.getRequestDispatcher("/message.jsp").forward(request,response);
+            throw new RuntimeException(e);
         }
 
     }
-
     /**
      * 删除新闻
      * @param request
@@ -115,56 +129,89 @@ public class NewsServlet extends HttpServlet {
      */
     private void delNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
         String id = request.getParameter("id");
         int newsId = Integer.parseInt(id);
         int rows = newsService.delNews(newsId);
-        if(rows>0){
-            request.setAttribute("msg","删除新闻成功");
-            request.getRequestDispatcher("/message.jsp").forward(request,response);
-        }else{
-            request.setAttribute("msg","删除新闻失败");
-            request.getRequestDispatcher("/message.jsp").forward(request,response);
+        if (rows > 0) {
+            request.setAttribute("msg", "删除新闻成功");
+            request.getRequestDispatcher("/message.jsp").forward(request, response);
+        } else {
+            request.setAttribute("msg", "删除新闻失败");
+            request.getRequestDispatcher("/message.jsp").forward(request, response);
         }
     }
+
 
     /**
      * 查找全部新闻
      * @param request
      * @param response
      */
-    private void findAllNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void findAllNews(HttpServletRequest request, HttpServletResponse response)  {
 
         List<News> list = newsService.findAllNews();
-        request.setAttribute("list",list);
-        request.getRequestDispatcher("/admin/NewsList.jsp").forward(request,response);
+        System.out.println(list);
+        if (list!=null&&list.size()>0){
+            request.setAttribute("list",list);
+            try {
+                request.getRequestDispatcher("/admin/findAllNews.jsp").forward(request,response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }else {
+            request.setAttribute("SESSION","查询失败");
+            try {
+                request.getRequestDispatcher("/success.jsp").forward(request,response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
-    /**
+       /**
      * 添加新闻
      * @param request
      * @param response
      */
-    private void addNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
+    private void addNews(HttpServletRequest request, HttpServletResponse response)  {
 
         News news = new News();
-        try {
-            BeanUtils.populate(news,request.getParameterMap());
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String description = request.getParameter("description");
+        String author = request.getParameter("author");
+        String createTime = request.getParameter("createTime");
+
+        news.setTitle(title);
+        news.setContent(content);
+        news.setDescription(description);
+        news.setAuthor(author);
+        news.setCreateTime(createTime);
+        System.out.println(news);
 
         int rows = newsService.addNews(news);
-        if(rows>0){
-            request.setAttribute("msg","添加新闻成功");
-            request.getRequestDispatcher("/message.jsp").forward(request,response);
-        }else{
-            request.setAttribute("msg","添加新闻失败");
-            request.getRequestDispatcher("/message.jsp").forward(request,response);
+        if (rows>0){
+            request.setAttribute("SESSION","添加成功");
+            try {
+                request.getRequestDispatcher("/success.jsp").forward(request,response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }else {
+            request.setAttribute("SESSION","添加失败");
+            try {
+                request.getRequestDispatcher("/success.jsp").forward(request,response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
         }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        doPost(request,response);
+
     }
 }

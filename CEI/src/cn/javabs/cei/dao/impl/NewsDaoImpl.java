@@ -22,15 +22,12 @@ public class NewsDaoImpl implements NewsDao {
     @Override
     public int addNews(News news) {
         try {
-            return queryRunner.update("insert into news(id,title,description,author,content,createTime,column) values(?,?,?,?,?,?,?)",news.getId(),news.getTitle(),
-                    news.getDescription(),news.getAuthor(),news.getContent(),news.getCreateTime(),news.getColumn()
-                    );
+            return queryRunner.update("insert into news(id,title,description,author,content,createTime) values (?,?,?,?,?,?)",news.getId(),news.getTitle(),
+                    news.getDescription(),news.getAuthor(),news.getContent(),news.getCreateTime());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 
     /**
      * 修改新闻
@@ -40,23 +37,22 @@ public class NewsDaoImpl implements NewsDao {
     @Override
     public int updateNews(News news) {
         try {
-            return queryRunner.update("update news set title = ? where id = ?",news.getTitle(),news.getId());
+            return queryRunner.update("update news set title = ? , description = ? ,author = ? ,content = ? ,createTime = ?  where id = ?",
+                    news.getTitle(),news.getDescription(),news.getAuthor(),news.getContent(),news.getCreateTime(),news.getId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-
     /**
      * 根据id查询新闻
-     * @param news
+     * @param id
      * @return
      */
     @Override
     public News findNewsById(int id) {
         try {
-            News news = queryRunner.query("select * from news where id = ?",new BeanHandler<News>(News.class));
+            News news = queryRunner.query("select * from news where id = ?",new BeanHandler<News>(News.class),id);
             return news;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -65,7 +61,6 @@ public class NewsDaoImpl implements NewsDao {
 
     /**
      * 查询所有新闻
-     * @param news
      * @return
      */
     @Override
@@ -81,7 +76,7 @@ public class NewsDaoImpl implements NewsDao {
 
     /**
      * 删除新闻
-     * @param news
+     * @param id
      * @return
      */
     @Override

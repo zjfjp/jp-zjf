@@ -2,19 +2,18 @@ create database cei;
 use cei;
 create table news(
 id int primary key auto_increment,
-title varchar(50) not null,
+title varchar(50) ,
 description varchar(250),
 author varchar (50),
 content varchar (5000),
 createTime varchar (50),
 click int default 0,
-column_id int
+columns_cid int
 );
 
 
-create table column(
-id int primary key auto_increment,
-Cname varchar(50) not null,
-Ctime varchar (50),
-foreign key column_id references news_id
+create table COLUMNS(
+cid int PRIMARY KEY auto_increment,
+cname VARCHAR(50) not null,
+FOREIGN key (cid) REFERENCES news(id)
 );
