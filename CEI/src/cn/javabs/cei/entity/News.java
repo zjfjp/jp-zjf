@@ -4,7 +4,7 @@ public class News {
 
     private int id;
     private String title;//新闻标题
-    private String description;//描述
+
     private String author;//作者
     private String content;//新闻内容
     private String createTime;//创建时间
@@ -43,14 +43,6 @@ public class News {
         this.createTime = createTime;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getClick() {
         return click;
     }
@@ -82,7 +74,6 @@ public class News {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", createTime='" + createTime + '\'' +
-                ", description='" + description + '\'' +
                 ", click=" + click +
                 ", column=" + columns +
                 ", author='" + author + '\'' +
