@@ -18,12 +18,12 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<News> findAllNews() {
-        return newsDao.findAllNews();
+        return newsDao.getAllNews();
     }
 
     @Override
     public News findNewsById(int id) {
-        return newsDao.findNewsById(id);
+        return newsDao.getfindNewsById(id);
 
     }
 
@@ -35,5 +35,15 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public int delNews(int id) {
         return newsDao.delNews(id);
+    }
+
+    @Override
+    public News findNewsByLike(String author) {
+        return (News) newsDao.getfindNewsByLike(author);
+    }
+
+    @Override
+    public News findNewsByName(String author) {
+        return newsDao.getfindNewsByName(author);
     }
 }

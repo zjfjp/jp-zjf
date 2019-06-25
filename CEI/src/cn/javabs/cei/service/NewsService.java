@@ -17,6 +17,8 @@ public interface NewsService {
     int updateNews(News news);
     //删除新闻
      int delNews(int newsId) ;
+    //模糊查询
+    News findNewsByLike(String author);
 
-
+    News findNewsByName(String author);
 }

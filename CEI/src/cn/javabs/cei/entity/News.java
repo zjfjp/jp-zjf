@@ -3,13 +3,13 @@ package cn.javabs.cei.entity;
 public class News {
 
     private int id;
-    private String title;//新闻标题
-
-    private String author;//作者
-    private String content;//新闻内容
-    private String createTime;//创建时间
-    private int click;//点击量
-    private Column columns;//栏目
+    private String title;
+    private String author;
+    private String content;
+    private int click;
+    private String createTime;
+    private String columnid;
+    private String name;
 
     public int getId() {
         return id;
@@ -27,20 +27,20 @@ public class News {
         this.title = title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
     }
 
     public int getClick() {
@@ -51,20 +51,28 @@ public class News {
         this.click = click;
     }
 
-    public Column getColumns() {
-        return columns;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setColumns(Column columns) {
-        this.columns = columns;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public String getAuthor() {
-        return author;
-}
+    public String getColumnid() {
+        return columnid;
+    }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setColumnid(String columnid) {
+        this.columnid = columnid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -72,12 +80,12 @@ public class News {
         return "News{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", click=" + click +
-                ", column=" + columns +
                 ", author='" + author + '\'' +
+                ", content='" + content + '\'' +
+                ", click=" + click +
+                ", createTime='" + createTime + '\'' +
+                ", columnid='" + columnid + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
-
 }

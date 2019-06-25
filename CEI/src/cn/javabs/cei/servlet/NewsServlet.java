@@ -25,6 +25,12 @@ public class NewsServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        doPost(request,response);
+    }
+
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html,charset=utf-8");
@@ -41,6 +47,10 @@ public class NewsServlet extends HttpServlet {
             updateNews(request, response);
         } else if (op.equals("goToAddNewsView")) {
             goToAddNewsView(request, response);
+        }else if(op.equals("findNewsByLike")){
+            findNewsByLike(request,response);
+        }else if(op.equals("findNewsByName")){
+            findNewsByName(request,response);
         }
         //数据回显
         else if (op.equals("editNews")) {
@@ -52,15 +62,56 @@ public class NewsServlet extends HttpServlet {
     }
 
     /**
+     *模糊查询
+     * @param request
+     * @param response
+     */
+    private void findNewsByLike(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String author = request.getParameter("author");
+        int name =Integer.parseInt(author);
+        News news= newsService.findNewsByLike(author);
+        System.out.println(news);
+
+        if(news != null){
+            request.setAttribute("news",news);
+            request.getRequestDispatcher("/News/IdList.jsp").forward(request,response);
+        }  else{
+            request.setAttribute("msg","新闻根据模糊查询失败");
+            request.getRequestDispatcher("/message.jsp").forward(request,response);
+        }
+    }
+
+    /**
+     * 名字查询
+     * @param request
+     * @param response
+     */
+    private void findNewsByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String author= request.getParameter("author");
+        News news=newsService.findNewsByName(author);
+
+        if ( news !=null ){
+            request.setAttribute("news",news);
+            request.getRequestDispatcher("/News/IdList.jsp").forward(request,response);
+        }
+        else{
+            request.setAttribute("msg","新闻根据作者查询失败");
+            request.getRequestDispatcher("/message.jsp").forward(request,response);
+        }
+    }
+
+    /**
      * 去添加新闻页面的方法
      * @param request
      * @param response
      */
     private void goToAddNewsView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-      List<Column> list = columnService.findAllColumn();
-      request.setAttribute("list",list);
-        request.getRequestDispatcher("/admin/addNews.jsp").forward(request,response);
+        List<Column> list = columnService.findAllColumn();
+        request.setAttribute("list",list);
+        request.getRequestDispatcher("/News/addNews.jsp").forward(request,response);
     }
 
     /**
@@ -76,7 +127,7 @@ public class NewsServlet extends HttpServlet {
         String id = request.getParameter("id");
         System.out.println("id:"+id);
         int  newsId = Integer.parseInt(id);
-        System.out.println("userId:"+newsId);
+        System.out.println("newsId:"+newsId);
         News news = newsService.findNewsById(newsId);
         System.out.println("news:"+news);
 
@@ -153,15 +204,16 @@ public class NewsServlet extends HttpServlet {
         System.out.println("list="+list);
         List<Column> columns = columnService.findAllColumn();
         request.setAttribute("columns",columns);
+        System.out.println(columns);
         if (list != null && list.size() >0){
             request.setAttribute("list",list);
-            request.getRequestDispatcher("/admin/news.jsp").forward(request,response);
+            request.getRequestDispatcher("/News/news.jsp").forward(request,response);
         }else{
             request.setAttribute("msg","error");
             request.getRequestDispatcher("/message.jsp").forward(request,response);
         }
     }
-       /**
+    /**
      * 添加新闻
      * @param request
      * @param response
@@ -170,13 +222,9 @@ public class NewsServlet extends HttpServlet {
 
         News news =new News();
 
-
-
         try {
             BeanUtils.populate(news,request.getParameterMap());
             int rows=newsService.addNews(news);;
-
-
             if (rows>0){
                 request.setAttribute("msg","success");
                 request.getRequestDispatcher("/message.jsp").forward(request,response);
@@ -192,11 +240,5 @@ public class NewsServlet extends HttpServlet {
         }
 
     }
-
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        doPost(request,response);
-
     }
-}
+

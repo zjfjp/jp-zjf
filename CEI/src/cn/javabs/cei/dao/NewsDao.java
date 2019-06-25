@@ -9,9 +9,13 @@ public interface NewsDao {
 
     int updateNews(News news);
 
-    News findNewsById(int id);
-
-    List<News> findAllNews();
-
     int delNews(int id);
+
+    News getfindNewsById(int id);
+
+    List<News> getAllNews();
+
+    Object getfindNewsByLike(String author);
+
+    News getfindNewsByName(String author);
 }
