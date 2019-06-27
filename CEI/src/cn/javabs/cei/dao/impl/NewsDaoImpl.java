@@ -2,7 +2,8 @@ package cn.javabs.cei.dao.impl;
 
 import cn.javabs.cei.dao.NewsDao;
 import cn.javabs.cei.entity.News;
-import cn.javabs.cei.util.DbcpUtil;
+
+import cn.javabs.cei.util.DruidUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class NewsDaoImpl implements NewsDao {
 
-    QueryRunner qr = new QueryRunner(DbcpUtil.getDataSource());
+    QueryRunner qr = new QueryRunner(DruidUtils.getDataSource());
 
     /**
      * 添加新闻

@@ -1,19 +1,21 @@
 create database cei;
 use cei;
-create table news(
-id int primary key auto_increment,
-title varchar(50) ,
-description varchar(250),
-author varchar (50),
-content varchar (5000),
-createTime varchar (50),
-click int default 0,
-columns_cid int
-);
 
+CREATE TABLE `news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL,
+  `content` varchar(5000) DEFAULT NULL,
+  `createTime` varchar(50) DEFAULT NULL,
+  `click` int(11) DEFAULT '0',
+  `columnid` int(11) DEFAULT NULL,
+  `author` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `column_id` (`columnid`),
+  CONSTRAINT `news_ibfk_1` FOREIGN KEY (`columnid`) REFERENCES `columns` (`cid`)
+)
 
-create table COLUMNS(
-cid int PRIMARY KEY auto_increment,
-cname VARCHAR(50) not null,
-FOREIGN key (cid) REFERENCES news(id)
-);
+CREATE TABLE `columns` (
+  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`cid`)
+)

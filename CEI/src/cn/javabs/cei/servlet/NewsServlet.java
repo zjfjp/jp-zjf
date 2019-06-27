@@ -25,7 +25,7 @@ public class NewsServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        doPost(request,response);
+        doGet(request,response);
     }
 
 
@@ -51,6 +51,8 @@ public class NewsServlet extends HttpServlet {
             findNewsByLike(request,response);
         }else if(op.equals("findNewsByName")){
             findNewsByName(request,response);
+        }else if(op.equals("findNewsById")) {
+            findNewsById(request,response);
         }
         //数据回显
         else if (op.equals("editNews")) {
@@ -59,6 +61,27 @@ public class NewsServlet extends HttpServlet {
             System.out.println("参数传递有误！");
         }
 
+    }
+
+    /**
+     * id查询
+     * @param request
+     * @param response
+     */
+    private void findNewsById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String id = request.getParameter("id");
+        int newsId=Integer.parseInt(id);
+        News news=newsService.findNewsById(newsId);
+        System.out.println(news);
+        if (news!=null){
+            request.setAttribute("news",news);
+            request.getRequestDispatcher("/News/IdList.jsp").forward(request,response);
+        }
+        else{
+            request.setAttribute("msg","新闻根据ID查询失败");
+            request.getRequestDispatcher("/message.jsp").forward(request,response);
+        }
     }
 
     /**
@@ -224,12 +247,12 @@ public class NewsServlet extends HttpServlet {
 
         try {
             BeanUtils.populate(news,request.getParameterMap());
-            int rows=newsService.addNews(news);;
+            int rows=newsService.addNews(news);
             if (rows>0){
-                request.setAttribute("msg","success");
+                request.setAttribute("msg","添加新闻成功");
                 request.getRequestDispatcher("/message.jsp").forward(request,response);
             }else {
-                request.setAttribute("msg","error");
+                request.setAttribute("msg","添加新闻失败");
                 request.getRequestDispatcher("/message.jsp").forward(request,response);
             }
 

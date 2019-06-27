@@ -4,17 +4,14 @@ import cn.javabs.cei.commons.Page;
 import cn.javabs.cei.entity.Column;
 import cn.javabs.cei.service.ColumnService;
 import cn.javabs.cei.service.impl.ColumnServiceImpl;
-
 import org.apache.commons.beanutils.BeanUtils;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @WebServlet("/columnServlet")
@@ -172,15 +169,11 @@ public class ColumnServlet extends HttpServlet {
 
         if (columnId != null && !"".equals(columnId)) {
             columnService.delColumn(columnId);
-            request.setAttribute("msg", "删除分类成功！");
-            request.getRequestDispatcher("/message.jsp").forward(request,
-                    response);
+            request.setAttribute("msg", "删除栏目成功！");
+            request.getRequestDispatcher("/message.jsp").forward(request,response);
             return;
         }
         System.out.println("是不是空");
         response.sendRedirect(request.getContextPath() + "/error.jsp");
     }
-
-
-
 }

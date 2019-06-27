@@ -3,7 +3,7 @@ package cn.javabs.cei.dao.impl;
 import cn.javabs.cei.dao.ColumnDao;
 import cn.javabs.cei.entity.Column;
 import cn.javabs.cei.entity.News;
-import cn.javabs.cei.util.DbcpUtil;
+import cn.javabs.cei.util.DruidUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ColumnDaoImpl implements ColumnDao {
-    QueryRunner qr = new QueryRunner(DbcpUtil.getDataSource());
+    QueryRunner qr = new QueryRunner(DruidUtils.getDataSource());
 
     public void save(Column column) {
 
@@ -73,9 +73,7 @@ public class ColumnDaoImpl implements ColumnDao {
     @Override
     public List<News> findAllNewsRecords(int startIndex, int pageSize) {
         try {
-        List<News> news = null;
-
-            news = qr.query("select * from news limit ?,?",new BeanListHandler<>(News.class),startIndex,pageSize);
+        List<News> news = qr.query("select * from news limit ? , ? " ,new BeanListHandler<>(News.class),startIndex,pageSize);
 
         System.out.println("news:"+news);
         return news;

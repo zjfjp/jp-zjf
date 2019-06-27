@@ -28,8 +28,8 @@
                     ${c.name}
             </td>
             <td>
-                <a href="${basePath}/columnServlet?op=editColumnView&columnid=${c.cid}">修改</a>
-                <a href="${basePath}/columnServlet?op=delColumn&columnid=${c.cid}">删除</a>
+                <a href="${basePath}/columnServlet?op=editColumnView&columnId=${c.cid}">修改</a>
+                <a href="${basePath}/columnServlet?op=delColumn&columnId=${c.cid}">删除</a>
             </td>
         </tr>
 

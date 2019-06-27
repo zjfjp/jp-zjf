@@ -10,9 +10,16 @@
 <html>
 <head>
     <title>Title</title>
+    <style type="text/css">
+        div{
+            position: absolute;
+            top: 50px;
+            left: 650px;
+        }
+    </style>
 </head>
 <body>
-<table border="1" width="438">
+<table border="1" width="600px" bordercolor="#6699FF">
     <tr>
         <th>编号</th>
         <th>标题</th>
@@ -42,18 +49,27 @@
         </tr>
     </c:forEach>
 </table>
-<form action="${pageContext.request.contextPath}/newsServlet?op=findNewsById" method="post">
-    <input type="text" name="id" >
-    <input type="submit" value="根据ID查询">
-</form>
-<form action="${pageContext.request.contextPath}/newsServlet?op=findNewsByName" method="post">
-    <input type="text" name="author" >
-    <input type="submit" value="根据作者查询">
-</form>
-<form action="${pageContext.request.contextPath}/newsServlet?op=findNewsByLike" method="post">
-    <input type="text"  name="ntitle">
-    <input type="submit" value="根据模糊查询">
-</form>
+<div>
+    <form action="${pageContext.request.contextPath}/newsServlet?op=findNewsById" method="post">
+        <input type="text" name="id" >
+        <br />
+        <br />
+        <input type="submit" value="根据ID查询" >
+    </form>
+    <form action="${pageContext.request.contextPath}/newsServlet?op=findNewsByName" method="post">
+        <input type="text" name="author" >
+        <br />
+        <br />
+        <input type="submit" value="根据作者查询">
+    </form>
+    <form action="${pageContext.request.contextPath}/newsServlet?op=findNewsByLike" method="post">
+        <input type="text"  name="ntitle">
+        <br />
+        <br />
+        <input type="submit" value="根据模糊查询">
+    </form>
+
+</div>
 </body>
 </html>
 <script>

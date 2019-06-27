@@ -25,6 +25,7 @@
                 标题：${l.title}<br />
                 作者: ${l.author }<br />
                 发布时间：${l.createTime}<br />
+                所属类别：${l.columnid}<br />
 
                 </a>
             </td>
