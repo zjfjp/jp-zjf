@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}columnServlet?op=editColumn&id=${c.cid}" method="post" >
+<form action="${pageContext.request.contextPath}columnsServlet?op=editColumns&id=${c.cid}" method="post" >
     <table border="1">
         <!-- 第1行  -->
         <tr>

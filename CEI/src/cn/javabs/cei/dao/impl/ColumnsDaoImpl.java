@@ -1,7 +1,7 @@
 package cn.javabs.cei.dao.impl;
 
-import cn.javabs.cei.dao.ColumnDao;
-import cn.javabs.cei.entity.Column;
+import cn.javabs.cei.dao.ColumnsDao;
+import cn.javabs.cei.entity.Columns;
 import cn.javabs.cei.entity.News;
 import cn.javabs.cei.util.DruidUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -11,10 +11,10 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ColumnDaoImpl implements ColumnDao {
+public class ColumnsDaoImpl implements ColumnsDao {
     QueryRunner qr = new QueryRunner(DruidUtils.getDataSource());
 
-    public void save(Column column) {
+    public void save(Columns column) {
 
         try {
             qr.update("insert into columns(name) values(?)", column.getName());
@@ -24,14 +24,14 @@ public class ColumnDaoImpl implements ColumnDao {
     }
 
     @Override
-    public void getColumnById(String id) {
+    public void getColumnsById(String id) {
 
     }
 
     @Override
-    public List<Column> getAllColumn() {
+    public List<Columns> getAllColumns() {
         try {
-            return qr.query("select * from columns", new BeanListHandler<Column>(Column.class));
+            return qr.query("select * from columns", new BeanListHandler<Columns>(Columns.class));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +83,7 @@ public class ColumnDaoImpl implements ColumnDao {
     }
 
     @Override
-    public void updateColumn(Column column) {
+    public void updateColumns(Columns column) {
 
         try {
             qr.update("update columns set name = ? where cid = ? ", column.getName(), column.getCid());
@@ -93,7 +93,7 @@ public class ColumnDaoImpl implements ColumnDao {
     }
 
     @Override
-    public void removeColumn(String columnId) {
+    public void removeColumns(String columnId) {
 
         try {
             qr.update("delete from columns where cid = ? ",columnId);
@@ -101,7 +101,4 @@ public class ColumnDaoImpl implements ColumnDao {
             throw new RuntimeException(e);
         }
     }
-
-
-
 }

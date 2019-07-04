@@ -1,10 +1,10 @@
 package cn.javabs.cei.servlet;
 
-import cn.javabs.cei.entity.Column;
+import cn.javabs.cei.entity.Columns;
 import cn.javabs.cei.entity.News;
-import cn.javabs.cei.service.ColumnService;
+import cn.javabs.cei.service.ColumnsService;
 import cn.javabs.cei.service.NewsService;
-import cn.javabs.cei.service.impl.ColumnServiceImpl;
+import cn.javabs.cei.service.impl.ColumnsServiceImpl;
 import cn.javabs.cei.service.impl.NewsServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public class NewsServlet extends HttpServlet {
 
     NewsService newsService = new NewsServiceImpl();
-    ColumnService columnService=new ColumnServiceImpl();
+    ColumnsService columnsService=new ColumnsServiceImpl();
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -37,6 +37,7 @@ public class NewsServlet extends HttpServlet {
 
         //op接收参数
         String op = request.getParameter("op");
+        //op与addNews相等
         if (op.equals("addNews")) {
             addNews(request, response);
         } else if (op.equals("findAllNews")) {
@@ -132,7 +133,7 @@ public class NewsServlet extends HttpServlet {
      */
     private void goToAddNewsView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Column> list = columnService.findAllColumn();
+        List<Columns> list = columnsService.findAllColumns();
         request.setAttribute("list",list);
         request.getRequestDispatcher("/News/addNews.jsp").forward(request,response);
     }
@@ -144,7 +145,7 @@ public class NewsServlet extends HttpServlet {
      */
     private void editNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Column> list = columnService.findAllColumn();
+        List<Columns> list = columnsService.findAllColumns();
         request.setAttribute("list",list);
 
         String id = request.getParameter("id");
@@ -176,7 +177,7 @@ public class NewsServlet extends HttpServlet {
         int newsId=Integer.parseInt(id);
         News news =new News();
 
-        List<Column> list = columnService.findAllColumn();
+        List<Columns> list = columnsService.findAllColumns();
         request.setAttribute("list",list);
 
         try {
@@ -225,7 +226,7 @@ public class NewsServlet extends HttpServlet {
 
         List<News> list = newsService.findAllNews();
         System.out.println("list="+list);
-        List<Column> columns = columnService.findAllColumn();
+        List<Columns> columns = columnsService.findAllColumns();
         request.setAttribute("columns",columns);
         System.out.println(columns);
         if (list != null && list.size() >0){

@@ -2,8 +2,8 @@ package cn.javabs.cei.entity;
 
 import java.io.Serializable;
 
-public class Column implements Serializable {
-    private String cid;
+public class Columns implements Serializable {
+    private String cid;//栏目id
     private String name; //栏目名称
 
     public String getCid() {
@@ -24,7 +24,7 @@ public class Column implements Serializable {
 
     @Override
     public String toString() {
-        return "Column{" +
+        return "Columns{" +
                 "cid=" + cid +
                 ", name='" + name + '\'' +
                 '}';

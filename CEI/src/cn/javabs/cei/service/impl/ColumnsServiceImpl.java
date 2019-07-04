@@ -1,17 +1,17 @@
 package cn.javabs.cei.service.impl;
 
 import cn.javabs.cei.commons.Page;
-import cn.javabs.cei.dao.ColumnDao;
-import cn.javabs.cei.dao.impl.ColumnDaoImpl;
-import cn.javabs.cei.entity.Column;
+import cn.javabs.cei.dao.ColumnsDao;
+import cn.javabs.cei.dao.impl.ColumnsDaoImpl;
+import cn.javabs.cei.entity.Columns;
 import cn.javabs.cei.entity.News;
-import cn.javabs.cei.service.ColumnService;
+import cn.javabs.cei.service.ColumnsService;
 
 import java.util.List;
 import java.util.UUID;
 
-public class ColumnServiceImpl implements ColumnService {
-    ColumnDao columnDao = new ColumnDaoImpl();
+public class ColumnsServiceImpl implements ColumnsService {
+    ColumnsDao columnDao = new ColumnsDaoImpl();
 
     @Override
     public Page findAllNews(String pagenumber) {
@@ -39,8 +39,8 @@ public class ColumnServiceImpl implements ColumnService {
     }
 
     @Override
-    public List<Column> findAllColumn() {
-        return columnDao.getAllColumn();
+    public List<Columns> findAllColumns() {
+        return columnDao.getAllColumns();
     }
 
     @Override
@@ -60,28 +60,28 @@ public class ColumnServiceImpl implements ColumnService {
     }
 
     @Override
-    public void addColumn(Column column) {
+    public void addColumns(Columns column) {
 
         column.setCid(UUID.randomUUID().toString());
         columnDao.save(column);
     }
 
     @Override
-    public void editColumn(Column column) {
+    public void editColumns(Columns column) {
 
-        columnDao.updateColumn(column);
+        columnDao.updateColumns(column);
     }
 
     @Override
-    public Column findColumnById(String id) {
-        columnDao.getColumnById(id);
+    public Columns findColumnsById(String id) {
+        columnDao.getColumnsById(id);
         return null;
     }
 
 
     @Override
-    public void delColumn(String columnId) {
+    public void delColumns(String columnId) {
 
-        columnDao.removeColumn(columnId);
+        columnDao.removeColumns(columnId);
     }
 }

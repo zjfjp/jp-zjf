@@ -1,9 +1,9 @@
 package cn.javabs.cei.servlet;
 
 import cn.javabs.cei.commons.Page;
-import cn.javabs.cei.entity.Column;
-import cn.javabs.cei.service.ColumnService;
-import cn.javabs.cei.service.impl.ColumnServiceImpl;
+import cn.javabs.cei.entity.Columns;
+import cn.javabs.cei.service.ColumnsService;
+import cn.javabs.cei.service.impl.ColumnsServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/columnServlet")
-public class ColumnServlet extends HttpServlet {
+@WebServlet("/columnsServlet")
+public class ColumnsServlet extends HttpServlet {
 
-    ColumnService columnService=new ColumnServiceImpl();
+    ColumnsService columnsService=new ColumnsServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,18 +33,18 @@ public class ColumnServlet extends HttpServlet {
         //接收参数op
         String op =request.getParameter("op");
 
-        if ("delColumn".equals(op)){
-            delColumn(request,response);
-        }else if ("editColumnView".equals(op)){
-            editColumnView(request,response);
-        }else if ("editColumn".equals(op)){
-            editColumn(request,response);
-        }else if ("addColumn".equals(op)){
-            addColumn(request,response);
-        }else if ("showColumnNews".equals(op)){
-            showColumnNews(request,response);
-        }else if  ("findAllColumn".equals(op)){
-            findAllColumn(request,response);
+        if ("delColumns".equals(op)){
+            delColumns(request,response);
+        }else if ("editColumnsView".equals(op)){
+            editColumnsView(request,response);
+        }else if ("editColumns".equals(op)){
+            editColumns(request,response);
+        }else if ("addColumns".equals(op)){
+            addColumns(request,response);
+        }else if ("showColumnsNews".equals(op)){
+            showColumnsNews(request,response);
+        }else if  ("findAllColumns".equals(op)){
+            findAllColumns(request,response);
         }else if ("showIndex".equals(op)){
             showIndex(request,response);
         }
@@ -55,18 +55,18 @@ public class ColumnServlet extends HttpServlet {
      * @param request
      * @param response
      */
-    private void addColumn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void addColumns(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // 1. 创建一个分类的对象
-        Column column = new Column();
+        Columns columns = new Columns();
         // 2. 接收了前台的name属性
         String name = request.getParameter("name");
         // 3. 通过对象 封装到 description
-        column.setName(name);
-        System.out.println("分类" + column);
+        columns.setName(name);
+        System.out.println("分类" + columns);
         // 分类 哈希值
-        System.out.println("分类名称：" + column.getName());
-        columnService.addColumn(column);
+        System.out.println("分类名称：" + columns.getName());
+        columnsService.addColumns(columns);
         // 添加一个成功的提示信息 ，临时性将“添加分类成功” 存放到msg
         // 设置一个标记 为msg （自个取得名字） 讲我想要的提示信息 放在后面的参数中
         request.setAttribute("msg", "添加分类成功！");
@@ -79,13 +79,13 @@ public class ColumnServlet extends HttpServlet {
      * @param request
      * @param response
      */
-    private void showColumnNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void showColumnsNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String pagenumber = request.getParameter("pagenumber");
         String columnId = request.getParameter("columnId");
-        List<Column> cs = columnService.findAllColumn();
-        Page page = columnService.findAllNewsPageRecords(pagenumber,columnId);
-        page.setUrl("columnServlet?op=showColumnNews&columnId="+columnId);
+        List<Columns> cs = columnsService.findAllColumns();
+        Page page = columnsService.findAllNewsPageRecords(pagenumber,columnId);
+        page.setUrl("columnsServlet?op=showColumnsNews&columnId="+columnId);
 
         request.setAttribute("page",page);
         request.setAttribute("cs",cs);
@@ -98,11 +98,11 @@ public class ColumnServlet extends HttpServlet {
      * @param request
      * @param response
      */
-    private void findAllColumn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void findAllColumns(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Column> cs = columnService.findAllColumn();
+        List<Columns> cs = columnsService.findAllColumns();
         request.setAttribute("cs",cs);
-        request.getRequestDispatcher("columnList.jsp").forward(request,response);
+        request.getRequestDispatcher("columnsList.jsp").forward(request,response);
     }
 
     /**
@@ -113,9 +113,9 @@ public class ColumnServlet extends HttpServlet {
     private void showIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String pagenumber = request.getParameter("pagenumber");
-        Page page = columnService.findAllNews(pagenumber);
-        page.setUrl("columnServlet?op=showIndex");
-        List<Column> cs = columnService.findAllColumn();
+        Page page = columnsService.findAllNews(pagenumber);
+        page.setUrl("columnsServlet?op=showIndex");
+        List<Columns> cs = columnsService.findAllColumns();
         request.setAttribute("page",page);
         request.setAttribute("cs",cs);
         request.getRequestDispatcher("/showAllNews.jsp").forward(request,response);
@@ -126,14 +126,13 @@ public class ColumnServlet extends HttpServlet {
      * @param request
      * @param response
      */
-    private void editColumn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void editColumns(HttpServletRequest request, HttpServletResponse response)  {
         try {
-            Column column = new Column();
+            Columns columns = new Columns();
 
-            BeanUtils.populate(column, request.getParameterMap());
+            BeanUtils.populate(columns, request.getParameterMap());
 
-            System.out.println("id" + column.getCid());
-            columnService.editColumn(column);
+             columnsService.editColumns(columns);
             request.setAttribute("msg", "修改分类成功！");
             request.getRequestDispatcher("/message.jsp").forward(request, response);
         } catch (Exception e) {
@@ -146,11 +145,11 @@ public class ColumnServlet extends HttpServlet {
      * @param request
      * @param response
      */
-    private void editColumnView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void editColumnsView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String columnId = request.getParameter("columnId");
 
-        Column cs = columnService.findColumnById(columnId);
+        Columns cs = columnsService.findColumnsById(columnId);
 
         request.setAttribute("cs", cs);
 
@@ -163,12 +162,12 @@ public class ColumnServlet extends HttpServlet {
      * @param request
      * @param response
      */
-    private void delColumn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void delColumns(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String columnId = request.getParameter("columnId");
 
         if (columnId != null && !"".equals(columnId)) {
-            columnService.delColumn(columnId);
+            columnsService.delColumns(columnId);
             request.setAttribute("msg", "删除栏目成功！");
             request.getRequestDispatcher("/message.jsp").forward(request,response);
             return;

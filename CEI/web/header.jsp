@@ -15,7 +15,7 @@
     <script charset="utf-8" src="${pageContext.request.contextPath}/kindeditor/kindeditor-all-min.js"></script>
     <script charset="utf-8" src="${pageContext.request.contextPath}/kindeditor/lang/zh_CN.js"></script>
     <script>
-        //默认模式  注意：下方中的content属性值要与textarea的name属性值相同才可以
+        //默认模式  下方中的content属性值要与textarea的name属性值相同才可以
         var editor;
         KindEditor.ready(function(K) {
             editor = K.create('textarea[name="content"]', {

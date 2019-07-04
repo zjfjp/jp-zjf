@@ -15,7 +15,7 @@
 <body>
 <a href="${basePath}">所有分类</a>
 <c:forEach items="${cs}" var="c">
-    <a href="${basePath}/columnServlet?op=showColumnNews&columnid=${c.cid}">${c.name}</a>
+    <a href="${basePath}/columnsServlet?op=showColumnsNews&columnid=${c.cid}">${c.name}</a>
 </c:forEach>
 <table border="1">
     <tr>

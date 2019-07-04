@@ -1,12 +1,13 @@
 package cn.javabs.cei.dao;
 
-import cn.javabs.cei.entity.Column;
+import cn.javabs.cei.entity.Columns;
+
 import cn.javabs.cei.entity.News;
 
 import java.util.List;
 
-public interface ColumnDao {
-    List<Column> getAllColumn();
+public interface ColumnsDao {
+    List<Columns> getAllColumns();
 
     int findPageNewsNumber(String columnId);
 
@@ -16,11 +17,13 @@ public interface ColumnDao {
 
     List<News> findAllNewsRecords(int startIndex, int pageSize);
 
-    void updateColumn(Column column);
+    void updateColumns(Columns column);
 
-    void removeColumn(String columnId);
 
-    void save(Column column);
 
-    void getColumnById(String id);
+    void removeColumns(String columnId);
+
+    void save(Columns column);
+
+    void getColumnsById(String id);
 }

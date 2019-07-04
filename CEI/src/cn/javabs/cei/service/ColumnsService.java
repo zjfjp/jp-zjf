@@ -1,25 +1,26 @@
 package cn.javabs.cei.service;
 
 import cn.javabs.cei.commons.Page;
-import cn.javabs.cei.entity.Column;
+import cn.javabs.cei.entity.Columns;
+
 
 import java.util.List;
 
-public interface ColumnService {
+public interface ColumnsService {
 
     //    查询所有新闻
     Page findAllNews(String pagenumber);
     //    查询所有栏目
-    List<Column> findAllColumn();
+    List<Columns> findAllColumns();
     //    按新闻分类的id及分页当前页码进行查询
     Page findAllNewsPageRecords(String pagenumber, String columnId);
     //    添加栏目
-    void addColumn(Column column);
+    void addColumns(Columns column);
     //    栏目修改
-    void editColumn(Column column);
+    void editColumns(Columns column);
     //    通过id查找栏目
-    Column findColumnById(String columnId);
+    Columns findColumnsById(String columnId);
     //   根据id 删除栏目
-    void delColumn(String columnId);
+    void delColumns(String columnId);
 
 }

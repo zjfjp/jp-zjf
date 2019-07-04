@@ -25,9 +25,9 @@
 <h3 align="center" style="font-size: 22px"> 	${sessionScope.u.username}新闻后台基本操作
 </h3>
 
-<a href="${basePath}/Column/addColumn.jsp">添加分类</a>
+<a href="${basePath}/Columns/addColumns.jsp">添加栏目</a>
 &nbsp;
-<a href="${basePath}/columnServlet?op=findAllColumn">查询分类</a>
+<a href="${basePath}/columnsServlet?op=findAllColumns">查询栏目</a>
 &nbsp;
 <a href="${basePath}/newsServlet?op=goToAddNewsView">添加新闻</a>
 &nbsp;

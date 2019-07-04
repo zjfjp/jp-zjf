@@ -11,7 +11,6 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 public class NewsDaoImpl implements NewsDao {
 
     QueryRunner qr = new QueryRunner(DruidUtils.getDataSource());

@@ -2,14 +2,14 @@ package cn.javabs.cei.entity;
 
 public class News {
 
-    private int id;
-    private String title;
-    private String author;
-    private String content;
-    private int click;
-    private String createTime;
-    private String columnid;
-    private String name;
+    private int id;//新闻id
+    private String title; //新闻标题
+    private String author;//新闻作者
+    private String content;//新闻内容
+    private int click;//新闻点击量
+    private String createTime;//创建新闻时间
+    private String columnid;//栏目id
+    private String name;//栏目名称
 
     public int getId() {
         return id;

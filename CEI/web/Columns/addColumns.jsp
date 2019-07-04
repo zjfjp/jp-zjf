@@ -10,18 +10,18 @@
 <br/>
 <html>
 <head>
-    <title>Title</title>
+    <title>添加栏目</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/columnServlet?op=addColumn" method="post" >
+<form action="${pageContext.request.contextPath}/columnsServlet?op=addColumns" method="post" >
     <table border="1">
         <!-- 第1行  -->
         <tr>
-            <td>分类名称</td>
+            <td>栏目名称</td>
             <td><input type="text" name="name"></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" value="添加分类"></td>
+            <td colspan="2"><input type="submit" value="添加栏目"></td>
         </tr>
     </table>
 </form>
